@@ -1,6 +1,12 @@
 package main;
 
+import gui.Window;
+
 public class Game {
+	
+	//initialize the window
+	private Window win;
+	
 	
 	//does the game is running ?
 	public boolean running;
@@ -18,7 +24,9 @@ public class Game {
 	
 	//initialisation
 	private void init(){
+		System.out.println("init");
 		//open window
+		win = new Window();
 		
 		//loading ressources
 		
