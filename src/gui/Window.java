@@ -13,11 +13,11 @@ import javax.swing.JPanel;
 
 public class Window extends JFrame {
 	
-	private Panel panel = new Panel();
+	private Panel panel = new Panel(this);
 	private JPanel pan = new JPanel();
 	
-	private int xSize = 1500;
-	private int ySize = 1000;
+	private int xSize = 1200;
+	private int ySize = 800;
 
 	public Window() {
 
@@ -38,24 +38,16 @@ public class Window extends JFrame {
 		//visible ?
 		this.setVisible(true);
 		
-		//buttonPlay.setLocation(xSize/2 - buttonPlay.getHeight(), ySize/2 - buttonPlay.getWidth());
-		
-
-		//pan.add(buttonPlay);
-		
 		init();
 		
-		this.setContentPane(pan);
+		this.setContentPane(panel);
 		
 		this.setVisible(true);
 		
 		
 	}
 	
-	private void init(){
-		
-		//test with gridBagLayout
-		
+	private void init(){		
 		pan.setLayout(new GridBagLayout());
 		
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -77,31 +69,25 @@ public class Window extends JFrame {
 	    gbc.anchor = gbc.CENTER;
 	    
 	    pannelButtonPlay.add(buttonPlay);    
-	    pan.add(pannelButtonPlay, gbc);
-		
-		/*
-		//create first interface : play button
-					
-				this.setLayout(new GridBagLayout());
-
-				JButton buttonPlay = new JButton();
-					
-				Font font = new Font("Verdana", Font.BOLD, 50);
-				
-				buttonPlay.setFont(font);
-					
-				buttonPlay.setBounds(500, 500, 500, 500);
-				buttonPlay.setPreferredSize(new Dimension(400, 400));
-				this.add(buttonPlay);
-				System.out.println("adding button");
-	*/
-			
-	
+	    pan.add(pannelButtonPlay, gbc);	
 		
 	}
+	
+	private void gameEngine(){
+		
+	}
+	
+	
 	private void reload(){
 		panel.repaint();
 	}
 	
+	public int getXSize(){
+		return this.xSize;
+	}
+	
+	public int getYSize(){
+		return this.ySize;
+	}
 
 }

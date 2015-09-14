@@ -32,12 +32,12 @@ public class Game {
 		
 		//post init
 		
-		running = true;
+		//running = true;
 		
 	}
 	
 	//game loop
-	private void gameLoop(){
+	private void gameLoop(){		
 		
 		/*
 		while (running) {
@@ -56,6 +56,10 @@ public class Game {
 	private void dispose(){
 		//free ressources
 		
+	}
+	
+	public boolean isRunning(){
+		return running;
 	}
 	
 
