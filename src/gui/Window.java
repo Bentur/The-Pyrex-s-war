@@ -1,11 +1,11 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +18,8 @@ public class Window extends JFrame {
 	
 	private int xSize = 1200;
 	private int ySize = 800;
+	
+	private int xOffset;
 
 	public Window() {
 
@@ -36,13 +38,12 @@ public class Window extends JFrame {
 		//always on top ?
 		this.setAlwaysOnTop(false);
 		//visible ?
+		this.setVisible(true);	
+		
 		this.setVisible(true);
 		
 		init();
-		
-		this.setContentPane(panel);
-		
-		this.setVisible(true);
+		gameEngine();
 		
 		
 	}
@@ -70,10 +71,86 @@ public class Window extends JFrame {
 	    
 	    pannelButtonPlay.add(buttonPlay);    
 	    pan.add(pannelButtonPlay, gbc);	
+	    
+	    this.setContentPane(pan);
 		
 	}
 	
+	private void testTranslate(){
+		for(int i=0; i<100; i++){
+			int UsX = panel.getUserX();
+			panel.setUserX(UsX + 1);
+			reload();
+		    this.setContentPane(panel);
+			
+			try {
+				Thread.sleep(25);
+			}catch (InterruptedException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	private void gameEngine(){
+		
+		this.setContentPane(panel);
+		panel.addMouseMotionListener(new MouseMotionListener(){
+
+			@Override
+			public void mouseMoved(MouseEvent e) {				
+			}
+
+			@Override
+			public void mouseDragged(MouseEvent e){
+				int flag = e.getPoint().x;
+								
+				int X = e.getX()  - xOffset ;
+				int Y = e.getY();
+				
+				if(X <= 1200 && X >= 0 && Y >= 25 && Y <= 775){
+					/*
+				System.out.println("X offset      : " + xOffset);
+				System.out.println("X event moved : " + e.getX());
+				System.out.println("X send        : " + X);
+					*/
+				panel.translate(X, 0);
+				}
+			}		
+		});
+		panel.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				xOffset = e.getX();
+				System.out.println("mouse pressed " + e.getX());
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+
 		
 	}
 	

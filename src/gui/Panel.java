@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class Panel extends JPanel{
+public class Panel extends JPanel {
 	
 	private Window window;
 	
@@ -19,26 +21,56 @@ public class Panel extends JPanel{
 	
 	JButton buttonPlay ;
 	
+	//the base affine transform
+	AffineTransform saveAT;
+	//the current affine transform 
+	
+	
 	//the top left X coord of the user view
-	private int UsX = 100;
+	private int UsX = 0;
+	private int lastUsX = 0;
 	
 	//the top left Y coord of the user view 
 	private int UsY = 0;
+	
+	private int imageWidth = 2000;
+	private int imageHeight = 800;
 		
 
 	public void paintComponent(Graphics g){
 		
+		Graphics2D g2d = (Graphics2D)g;
+		
 		 try {
 
-			BufferedImage img = ImageIO.read(new File("BackgroundWorldTest.jpg"));
+			BufferedImage img = ImageIO.read(new File("src/texture/BackgroundWorldTest.jpg"));
 
 			//img.getSubimage(UsX, UsY, window.getXSize(), window.getYSize());
-			//g.setClip(UsX, UsY, window.getXSize() + UsX, window.getYSize());
-			g.setClip(UsX, 0, 100 , 100);
+			//g.setClip(0, 0, window.getXSize(), window.getYSize());
+			//g.setClip(UsX, 0, 100 , 100);
+			
+			//g2d.create(-UsX, UsY, 1200, 800);
+			//g2d.translate(-UsX, UsY);
+			
+			AffineTransform AT = new AffineTransform();
+			
+			if(saveAT == null){
+			saveAT = g2d.getTransform();
+			}
+						
+			AT.translate(-UsX, UsY);
+			
+			if(AT != null){
+			g2d.setTransform(AT);
+			}
+			
+			//g2d.setTransform(saveAT);
 
-			g.drawImage(img, 0, 0, this);
+			//g2d.transform(new AffineTransform(0, 0));
 
-		      //g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+			g2d.drawImage(img, 0, 0, this);
+			
+			g2d.dispose();
 
 		    } catch (IOException e) {
 
@@ -49,5 +81,40 @@ public class Panel extends JPanel{
 			
 	}
 	
+	public void setUserX(int x){
+		this.UsX = x;
+	}
+	
+	public int getUserX(){
+		return this.UsX;
+	}
+	
+	public void translate(int x, int y){
+		//translateUndo();
+		
+		if( x >= 800){
+			this.UsX = 800;
+		//System.out.println("user X" + UsX);
+		}else if(UsX + x < 0){
+			this.UsX = 0;
+		//System.out.println("user X" + UsX);
+		} else {
+			this.UsX = x;
+		//System.out.println("X user  :" + UsX);
+		}
+		this.UsY = y;
+		this.lastUsX = this.UsX;
+		
+		//
+		
+		repaint();
+		
+	}
+	
+	public void translateUndo(){
+		this.UsX = lastUsX;
+		//AT = saveAT;
+		repaint();
+	}
 
 }
