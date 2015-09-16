@@ -2,10 +2,13 @@ package gui;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -43,8 +46,12 @@ public class Panel extends JPanel {
 		
 		 try {
 
-			BufferedImage img = ImageIO.read(new File("resources/texture/BackgroundWorldTest.jpg"));
+			BufferedImage img = ImageIO.read(ResourceLoader.load("texture/BackgroundWorldTest.jpg"));
+			 
+			//URL url = this.getClass().getClassLoader().getResource("resources/texture/BackgroundWorldTest.jpg");
 
+			//BufferedImage img = ImageIO.read(url);
+			//Image img = getImage("resources/texture/BackgroundWorldTest.jpg");
 			//img.getSubimage(UsX, UsY, window.getXSize(), window.getYSize());
 			//g.setClip(0, 0, window.getXSize(), window.getYSize());
 			//g.setClip(UsX, 0, 100 , 100);
@@ -108,6 +115,12 @@ public class Panel extends JPanel {
 		repaint();
 		System.out.println("   " );
 
+	}
+	
+	//Function from internet :)
+	public static Image getImage(final String pathAndFileName) {
+	    final URL url = Thread.currentThread().getContextClassLoader().getResource(pathAndFileName);
+	    return Toolkit.getDefaultToolkit().getImage(url);
 	}
 
 }
