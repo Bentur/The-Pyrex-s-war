@@ -27,7 +27,7 @@ public class Panel extends JPanel {
 	
 	
 	//the top left X coord of the user view
-	private int UsX = 0;
+	public int UsX;
 	private int lastUsX = 0;
 	
 	//the top left Y coord of the user view 
@@ -43,7 +43,7 @@ public class Panel extends JPanel {
 		
 		 try {
 
-			BufferedImage img = ImageIO.read(new File("src/texture/BackgroundWorldTest.jpg"));
+			BufferedImage img = ImageIO.read(new File("resources/texture/BackgroundWorldTest.jpg"));
 
 			//img.getSubimage(UsX, UsY, window.getXSize(), window.getYSize());
 			//g.setClip(0, 0, window.getXSize(), window.getYSize());
@@ -89,32 +89,25 @@ public class Panel extends JPanel {
 		return this.UsX;
 	}
 	
-	public void translate(int x, int y){
-		//translateUndo();
+	public void translate(int x, int xOffset){		
 		
-		if( x >= 800){
+		if(this.UsX + x >= 800){
 			this.UsX = 800;
-		//System.out.println("user X" + UsX);
+		System.out.println("user X : " + UsX);
 		}else if(UsX + x < 0){
 			this.UsX = 0;
-		//System.out.println("user X" + UsX);
-		} else {
-			this.UsX = x;
-		//System.out.println("X user  :" + UsX);
+		System.out.println("user X : " + UsX);
+		} else {		
+		System.out.println("X user  :" + UsX);
+		System.out.println("UsX :" + UsX + ", x sended : " + x + " UsX+x : " + (UsX + x));
+
+			this.UsX = UsX + x;
+		System.out.println("X user  :" + UsX);
 		}
-		this.UsY = y;
-		this.lastUsX = this.UsX;
-		
-		//
 		
 		repaint();
-		
-	}
-	
-	public void translateUndo(){
-		this.UsX = lastUsX;
-		//AT = saveAT;
-		repaint();
+		System.out.println("   " );
+
 	}
 
 }

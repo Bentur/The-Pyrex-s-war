@@ -20,6 +20,7 @@ public class Window extends JFrame {
 	private int ySize = 800;
 	
 	private int xOffset;
+	public int lastX ;
 
 	public Window() {
 
@@ -95,62 +96,61 @@ public class Window extends JFrame {
 		
 		this.setContentPane(panel);
 		panel.addMouseMotionListener(new MouseMotionListener(){
+			
+			@Override
+			public void mouseDragged(MouseEvent e){				
+				
+				int X = e.getX() - xOffset ;
+				int Y = e.getY();
+				
+				if(e.getX() <= 1200 && e.getX() >= 0 && e.getY() >= 25 && e.getY() <= 775){
+					
+				System.out.println("X offset      : " + xOffset);
+				System.out.println("X event moved : " + e.getX());
+				System.out.println("X send        : " + X);				
+				System.out.println("lastX         : " + lastX);				
 
+				if(lastX != 0){
+				System.out.println("X send        : " + (X - lastX));				
+				panel.translate(X - lastX, 0);
+				}else
+				panel.translate(X, 0);
+
+				lastX = X;
+
+				}else{
+					lastX = 0;
+				}
+			}	
 			@Override
 			public void mouseMoved(MouseEvent e) {				
 			}
-
-			@Override
-			public void mouseDragged(MouseEvent e){
-				int flag = e.getPoint().x;
-								
-				int X = e.getX()  - xOffset ;
-				int Y = e.getY();
-				
-				if(X <= 1200 && X >= 0 && Y >= 25 && Y <= 775){
-					/*
-				System.out.println("X offset      : " + xOffset);
-				System.out.println("X event moved : " + e.getX());
-				System.out.println("X send        : " + X);
-					*/
-				panel.translate(X, 0);
-				}
-			}		
 		});
 		panel.addMouseListener(new MouseListener(){
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
+			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				xOffset = e.getX();
+				lastX = 0;
+				
+				System.out.println("///////////////////////////////////////////new event /////////////////////////////////////////////////////////////");
 				System.out.println("mouse pressed " + e.getX());
 			}
 
 			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
+			public void mouseClicked(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				lastX = 0;
+				System.out.println("mouse released : lastX         : " + lastX);				
+
 			}
 			
 		});
-
 		
 	}
 	
