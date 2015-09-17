@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 
 public class Window extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
+	
+	
 	private Panel panel = new Panel(this);
 	private JPanel pan = new JPanel();
 	
@@ -41,15 +44,11 @@ public class Window extends JFrame {
 		//visible ?
 		this.setVisible(true);	
 		
-		this.setVisible(true);
-		
-		init();
-		gameEngine();
-		
+		this.setVisible(true);		
 		
 	}
 	
-	private void init(){		
+	public void init(){		
 		pan.setLayout(new GridBagLayout());
 		
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -77,22 +76,7 @@ public class Window extends JFrame {
 		
 	}
 	
-	private void testTranslate(){
-		for(int i=0; i<100; i++){
-			int UsX = panel.getUserX();
-			panel.setUserX(UsX + 1);
-			reload();
-		    this.setContentPane(panel);
-			
-			try {
-				Thread.sleep(25);
-			}catch (InterruptedException e){
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	private void gameEngine(){
+	public void gameEngine(){
 		
 		this.setContentPane(panel);
 		panel.addMouseMotionListener(new MouseMotionListener(){
@@ -101,7 +85,6 @@ public class Window extends JFrame {
 			public void mouseDragged(MouseEvent e){				
 				
 				int X = e.getX() - xOffset ;
-				int Y = e.getY();
 				
 				if(e.getX() <= 1200 && e.getX() >= 0 && e.getY() >= 25 && e.getY() <= 775){
 					
@@ -126,6 +109,7 @@ public class Window extends JFrame {
 			public void mouseMoved(MouseEvent e) {				
 			}
 		});
+		
 		panel.addMouseListener(new MouseListener(){
 			
 			@Override

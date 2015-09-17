@@ -16,23 +16,16 @@ import javax.swing.JPanel;
 
 public class Panel extends JPanel {
 	
-	private Window window;
-	
 	public Panel(Window win){
-		window = win;
 	}
 	
 	JButton buttonPlay ;
 	
 	//the base affine transform
-	AffineTransform saveAT;
-	//the current affine transform 
-	
+	AffineTransform saveAT;	
 	
 	//the top left X coord of the user view
 	public int UsX;
-	private int lastUsX = 0;
-	
 	//the top left Y coord of the user view 
 	private int UsY = 0;
 	
@@ -44,47 +37,19 @@ public class Panel extends JPanel {
 		
 		Graphics2D g2d = (Graphics2D)g;
 		
-		 try {
-
-			BufferedImage img = ImageIO.read(ResourceLoader.load("texture/BackgroundWorldTest.jpg"));
-			 
-			//URL url = this.getClass().getClassLoader().getResource("resources/texture/BackgroundWorldTest.jpg");
-
-			//BufferedImage img = ImageIO.read(url);
-			//Image img = getImage("resources/texture/BackgroundWorldTest.jpg");
-			//img.getSubimage(UsX, UsY, window.getXSize(), window.getYSize());
-			//g.setClip(0, 0, window.getXSize(), window.getYSize());
-			//g.setClip(UsX, 0, 100 , 100);
-			
-			//g2d.create(-UsX, UsY, 1200, 800);
-			//g2d.translate(-UsX, UsY);
-			
-			AffineTransform AT = new AffineTransform();
-			
-			if(saveAT == null){
-			saveAT = g2d.getTransform();
-			}
-						
-			AT.translate(-UsX, UsY);
-			
-			if(AT != null){
-			g2d.setTransform(AT);
-			}
-			
-			//g2d.setTransform(saveAT);
-
-			//g2d.transform(new AffineTransform(0, 0));
-
-			g2d.drawImage(img, 0, 0, this);
-			
-			g2d.dispose();
-
-		    } catch (IOException e) {
-
-		      e.printStackTrace();
-
-		    }
+		AffineTransform AT = new AffineTransform();
 		
+		AT.translate(-UsX, UsY);
+				
+		g2d.setTransform(AT);
+		
+		try {
+			BufferedImage img = ImageIO.read(ResourceLoader.load("texture/BackgroundWorldTest.jpg"));					
+			g2d.drawImage(img, 0, 0, this);			
+			g2d.dispose();
+		    } catch (IOException e) {
+		      e.printStackTrace();
+		    }	
 			
 	}
 	
@@ -107,9 +72,9 @@ public class Panel extends JPanel {
 		} else {		
 		System.out.println("X user  :" + UsX);
 		System.out.println("UsX :" + UsX + ", x sended : " + x + " UsX+x : " + (UsX + x));
-
-			this.UsX = UsX + x;
+		this.UsX = UsX + x;
 		System.out.println("X user  :" + UsX);
+		
 		}
 		
 		repaint();
@@ -117,7 +82,7 @@ public class Panel extends JPanel {
 
 	}
 	
-	//Function from internet :)
+	//Function from the internet :)
 	public static Image getImage(final String pathAndFileName) {
 	    final URL url = Thread.currentThread().getContextClassLoader().getResource(pathAndFileName);
 	    return Toolkit.getDefaultToolkit().getImage(url);
